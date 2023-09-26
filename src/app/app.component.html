@@ -1,0 +1,11 @@
+<div class="container glacial-font">
+  <mat-grid-list [cols]='4' gutterSize='3'>
+      <mat-grid-tile class="inputField" [colspan]="4" [rowspan]="1">
+          <input type="text" [(ngModel)]="current">
+      </mat-grid-tile>
+      <mat-grid-tile *ngFor="let tile of buttons" [ngClass]="tile.class"  class="number" [colspan]="tile.cols" [rowspan]="tile.rows"
+          [style.background]="tile.color" (click)=update(tile.text)>
+          {{tile.text}}
+      </mat-grid-tile>
+  </mat-grid-list>
+</div>
