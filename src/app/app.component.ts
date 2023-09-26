@@ -17,7 +17,7 @@ export interface Tile {
   standalone: true,
   imports: [CommonModule, MatGridListModule, FormsModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   buttons: Tile[];
   inputArray: any[];
   current: string;
+  history: string = '';
   currentoperation: string = '';
 
   constructor() {
@@ -55,7 +56,6 @@ export class AppComponent implements OnInit {
   }
 
   update(event: string) {
-    console.log(event);
     switch (event) {
       case '/':
       case 'x':
@@ -63,6 +63,7 @@ export class AppComponent implements OnInit {
       case '+': {
         this.inputArray.push(this.current, event);
         this.current = '';
+        this.history += ' ' + event + ' ';
         break;
       }
       case '=': {
@@ -72,6 +73,7 @@ export class AppComponent implements OnInit {
       }
       case 'AC': {
         this.clear();
+        this.history = '';
         break;
       }
       default: {
@@ -79,6 +81,7 @@ export class AppComponent implements OnInit {
           this.clear();
         }
         this.current += event;
+        this.history += event;
         break;
       }
     }
@@ -110,40 +113,25 @@ export class AppComponent implements OnInit {
     let result = '';
     switch (operation) {
       case '/': {
-        result = this.divide(num1, num2).toString();
+        result = (num1 / num2).toString();
         break;
       }
       case 'x': {
-        result = this.multiply(num1, num2).toString();
+        result = (num1 * num2).toString();
         break;
       }
+
       case '-': {
-        result = this.subtract(num1, num2).toString();
+        result = (num1 - num2).toString();
         break;
       }
+      
       default: {
-        result = this.add(num1, num2).toString();
+        result = (num1 + num2).toString();
         break;
       }
     }
     return result;
-  }
-
-
-  add(num1: number, num2: number) {
-    return num1 + num2;
-  }
-
-  subtract(num1: number, num2: number) {
-    return num1 - num2;
-  }
-
-  multiply(num1: number, num2: number) {
-    return num1 * num2;
-  }
-
-  divide(num1: number, num2: number) {
-    return num1 / num2;
   }
 
 }
